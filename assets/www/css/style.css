@@ -1,0 +1,49 @@
+@CHARSET "ISO-8859-1";
+
+.index{
+	background:none;
+	background-color:#CF0606;
+}
+#page{
+	text-shadow: none;
+	font-family:"century gothic", century gothic, sans-serif;
+}
+#header h1{
+	background-image: url("vodacom1.jpg");
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    font-size: 1.3em;
+    margin-bottom: 0.7%;
+    margin-left: 1%;
+    margin-top: 0.7%;
+    padding-left: 40px;
+    text-align: left;
+}
+
+.home{
+	width:70%;
+	margin:0 auto;
+	text-align:right;
+	color:#fff;
+}
+#page .home a{
+	color:#fff;
+}
+.home h1{
+	background-image: url("../img/logo.png");
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    float: right;
+    font-size: 400%;
+    margin-top: 5%;
+    padding-left: 80px;
+}
+.home h2{
+	clear:both;
+	float:none;
+}
+.home #start > span{
+	padding: 0.6em;
+}
