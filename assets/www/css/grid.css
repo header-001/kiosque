@@ -1,0 +1,31 @@
+@media all and (max-width: 479px){
+	#content .form-title, 
+	#content form{
+		width:85%;
+	}
+	#content .content-primary{
+    	width: 100%;
+	}
+	#content .content-secondary{
+    	width: 100%;
+	}
+}
+
+@media all and (min-width: 480px){
+	
+	#content .form-title, 
+	#content form{
+		width:65%;
+	}
+	#content form div.bloc-bouton.controlPin .back ~ div {
+    	font-weight: normal;
+	    margin: 0 0 0 6%;
+	    width: 30%;
+	}
+	#content .content-primary{
+    	width: 75%;
+	}
+	#content .content-secondary{
+    	width: 25%;
+	}
+}
