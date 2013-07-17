@@ -17,18 +17,19 @@
 		<script type="text/javascript" charset="utf-8" src="js/script.js"></script>
 	</head>
 	<body id="body">
-	    <div data-role="page" id="page" class="index page">
+	    <div data-role="page" id="page" class="index">
 	    	<div data-role=content>
 	    		<div class="home">
 		    		<h1>vodacom</h1>
-		    		<ul data-role="listview" class="choix-lang">
-		    			<li data-lang="fr">Choisissez votre langue</li>
-		    			<li data-lang="en">Choose your language</li>
-		    		</ul>
-					<div class="langues">
-						<a href="fr/condition.html" data-role="button" data-icon="check" data-iconpos="right" data-inline="true" data-mini="true">Français</a>
-						<a href="en/condition.html" data-role="button" data-icon="check" data-iconpos="right" data-inline="true" data-mini="true">English</a>
-					</div>
+		    		<h2>Self-service kiosk</h2>
+		    		<h3>View my account summary</h3>
+		    		<h3>Manage my service</h3>
+		    		<h3>Manage my profile</h3>
+		    		<h3>Buy bundles</h3>
+		    		<p>
+		    			Please accept the <a href="#popupCondition" data-rel="popup"  data-position-to="window">terms & conditions</a> to continue 
+		    			<a href ="page2.html" id="start" data-role="button" data-mini="false" data-inline="true"><boutom type="bouton" name="start"/></a>
+		    		</p>
 	    		</div>
 	  		</div>
 		    <div id="popupCondition" data-role="popup" class="ui-content">
