@@ -10,6 +10,21 @@ function onDeviceReady() {
 		
 		UrlServer :"",
 		
+		MsgErreur : {
+			fr:{
+				ErreurConnexion:"Erreur de connexion",
+				ErreurNumero: "Numéro invalide",
+				ErreurPin: "Erreur Pin"
+			},
+			en:{
+				ErreurConnexion:"Connection error",
+				ErreurNumero: "Invalid number",
+				ErreurPin: "Error Pin"
+			}
+		},
+		
+		Lang :"",
+		
 		submitform: function(){
 				 
 			$.fn.UrlServer  = "http://genitranssprl.com/simulator/traitement.php";
@@ -21,7 +36,7 @@ function onDeviceReady() {
     			$.fn.UrlServer = "http://10.0.2.2/mobile/simulator/traitement.php";
     		//$.fn.UrlServer = "http://localhost/mobile/simulator/traitement.php";
 			
-			$(':submit,.ui-submit').bind('click', function() { 
+			$('.loggin').bind('click', function() { 
 				
 				 var form 	= $(this).parents('form');
 				 var formData = form.serialize();
@@ -51,6 +66,14 @@ function onDeviceReady() {
 				 });
 				 return false;
 			});
+			$('.langues .entrer').bind('click', function() { 
+					console.log($(this).parents("form").serializeArray());
+					var values = $(this).parents("form").serializeArray();
+					console.log(values[0]);
+					var url = values[0]['value']
+					$.mobile.changePage( url , {}); 
+					return false;
+			});
 		},
 		onSuccess: function(data,action){
 			 console.log(action);
@@ -58,15 +81,15 @@ function onDeviceReady() {
 			 
 			 	case "SetSession":
 			 		if(data.error)
-			        	showAlert(data.msg);
+			        	showAlert($.fn.MsgErreur[$.fn.Lang].ErreurNumero);
 			 		else
-			 			$.mobile.changePage( "4-signin.html?num=" + data.num + "&pin=" + data.pin , {}); 
+			 			$.mobile.changePage( "confirme_pin.html?num=" + data.num + "&pin=" + data.pin , {}); 
 				 break;
 			 	case "SingIn":
 			 		if(data.error)
-			        	showAlert(data.msg);
+			        	showAlert($.fn.MsgErreur[$.fn.Lang][data.msg]);
 			 		else
-			 			$.mobile.changePage( "account/summary.html?n=" + data.num + "&s=" + data.session , {});  
+			 			$.mobile.changePage( "summary.html?n=" + data.num + "&s=" + data.session , {});  
 				 break;
 			 	case "FetchInfo":
 
@@ -81,7 +104,7 @@ function onDeviceReady() {
         	
         },
         onError: function(){
-        	showAlert('Erreur de connexion');
+        	showAlert($.fn.MsgErreur[$.fn.Lang].ErreurConnexion);
         },
     	getUrlVars: function() {
 		    var vars = [], hash;
@@ -122,6 +145,11 @@ function onDeviceReady() {
 					s = vars["s"];
 
 			}
+			$(".content-secondary ul a ").bind("click",function(){
+				var href= $(this).data('href');
+				$.mobile.changePage( href + "?n=" + n + "&s=" + s, {});
+			});
+			
 			if(pin && $('#tempopin')){
 				$('#tempopin').text(pin);
 				$('#num').val(num);
@@ -149,6 +177,33 @@ function onDeviceReady() {
    		          	}
 		        });
 			}
+			if(s && n && $(".shop")){
+				
+				var dataToSend = "s="+s+"&n="+n+"&Doaction=FetchInfo";
+				console.log($.fn.UrlServer);
+				$.ajax({
+		            type: "POST",
+		            url: $.fn.UrlServer,
+		            cache: false,
+		            data: dataToSend,
+	   		    	dataType: 'json',
+   		          	success:  function (data) {
+
+   		          	},
+		            error: function () {
+
+   		          	}, 
+   		          	beforeSend: function(){
+
+   		          	},
+   		          	complete: function(){
+
+   		          	}
+		        });
+			}
+
+			var params = $.mobile.activePage.data('url').split('/');
+			$.fn.Lang = params[5];
 
 		},
 		__setSummaryContent : function(summary){
@@ -219,15 +274,112 @@ function onDeviceReady() {
 	 });
 })(jQuery);
 
-$(document).on('pageinit',function(){
+$(document).bind('pageinit',function(){
 	$('form').submitform();
-});
-
-
-$("#header").ready(function(){
-
+	
 	var winHeight = $( window ).height();
 	var headHeight = $( "#header" ).height();
 	var h = parseInt(winHeight - headHeight);
-	$("form").height(h-150);
+	$("form").height(h-200);
+	
+	var contHeight = $(".content-primary").height();
+	$(".content-secondary").height(contHeight-30);
 });
+
+$(document).bind('pagebeforechange',function(){
+
+});
+
+
+var myScroll,
+	pullDownEl, pullDownOffset,
+	pullUpEl, pullUpOffset,
+	generatedCount = 0;
+
+function pullDownAction () {
+	setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
+		var el, li, i;
+		el = document.getElementById('thelist');
+
+		for (i=0; i<3; i++) {
+			li = document.createElement('li');
+			li.innerText = 'Generated row ' + (++generatedCount);
+			el.insertBefore(li, el.childNodes[0]);
+		}
+		
+		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
+	}, 1000);	// <-- Simulate network congestion, remove setTimeout from production!
+}
+
+function pullUpAction () {
+	setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
+		var el, li, i;
+		el = document.getElementById('thelist');
+
+		for (i=0; i<3; i++) {
+			li = document.createElement('li');
+			li.innerText = 'Generated row ' + (++generatedCount);
+			el.appendChild(li, el.childNodes[0]);
+		}
+		
+		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
+	}, 1000);	// <-- Simulate network congestion, remove setTimeout from production!
+}
+
+function loaded() {
+	pullDownEl = document.getElementById('pullDown');
+	pullDownOffset = pullDownEl.offsetHeight;
+	pullUpEl = document.getElementById('pullUp');	
+	pullUpOffset = pullUpEl.offsetHeight;
+	
+	myScroll = new iScroll('wrapper', {
+		useTransition: true,
+		topOffset: pullDownOffset,
+		onRefresh: function () {
+			if (pullDownEl.className.match('loading')) {
+				pullDownEl.className = '';
+				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
+			} else if (pullUpEl.className.match('loading')) {
+				pullUpEl.className = '';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Pull up to load more...';
+			}
+		},
+		onScrollMove: function () {
+			if (this.y > 5 && !pullDownEl.className.match('flip')) {
+				pullDownEl.className = 'flip';
+				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Release to refresh...';
+				this.minScrollY = 0;
+			} else if (this.y < 5 && pullDownEl.className.match('flip')) {
+				pullDownEl.className = '';
+				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
+				this.minScrollY = -pullDownOffset;
+			} else if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
+				pullUpEl.className = 'flip';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Release to refresh...';
+				this.maxScrollY = this.maxScrollY;
+			} else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
+				pullUpEl.className = '';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Pull up to load more...';
+				this.maxScrollY = pullUpOffset;
+			}
+		},
+		onScrollEnd: function () {
+			if (pullDownEl.className.match('flip')) {
+				pullDownEl.className = 'loading';
+				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Loading...';				
+				pullDownAction();	// Execute custom function (ajax call?)
+			} else if (pullUpEl.className.match('flip')) {
+				pullUpEl.className = 'loading';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Loading...';				
+				pullUpAction();	// Execute custom function (ajax call?)
+			}
+		}
+	});
+	
+	setTimeout(function () { document.getElementById('wrapper').style.left = '0'; }, 800);
+}
+
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
+

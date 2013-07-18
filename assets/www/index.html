@@ -14,7 +14,9 @@
     	<script type="text/javascript" charset="utf-8" src="jquery/jquery.mobile-1.3.1.min.js"></script>
     	
 		<script type="text/javascript" charset="utf-8" src="js/cordova.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/iscroll.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/script.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/custom-script.js"></script>
 	</head>
 	<body id="body">
 	    <div data-role="page" id="page" class="index page">
@@ -25,10 +27,17 @@
 		    			<li data-lang="fr">Choisissez votre langue</li>
 		    			<li data-lang="en">Choose your language</li>
 		    		</ul>
-					<div class="langues">
-						<a href="fr/condition.html" data-role="button" data-icon="check" data-iconpos="right" data-inline="true" data-mini="true">Français</a>
+					<!-- div class="langues">
+						<a href="fr/condition.html" data-role="button" data-icon="check" data-iconpos="right" data-inline="true" data-mini="true" class="force-reload">Français</a>
 						<a href="en/condition.html" data-role="button" data-icon="check" data-iconpos="right" data-inline="true" data-mini="true">English</a>
-					</div>
+					</div -->
+					<form action="#" class="langues">
+						<select name="lang"  data-inline="true" data-mini="true">
+							<option value="fr/condition.html">Français</option>
+							<option value="en/condition.html">English</option>
+						</select>
+						<input type="submit" value="Entrer" name="Entrer" class="entrer" data-mini="true" data-inline="true"/>
+					</form>
 	    		</div>
 	  		</div>
 		    <div id="popupCondition" data-role="popup" class="ui-content">

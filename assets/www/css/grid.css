@@ -27,5 +27,25 @@
 	}
 	#content .content-secondary{
     	width: 25%;
+    	min-height: 520px;
+    	position: relative;
+	}
+	#content .content-secondary .deconnexion{
+	 	bottom: 0.5em;
+	    position: absolute;
+	    right: 0;
+	}
+	.grid .ui-listview {
+	    padding: 0 1%;
+	}
+	.grid .ui-listview .ui-li {
+	    float: left;
+	    width: 48%;
+	}
+	.content-primary.grid .ui-listview .summary{
+		margin-right: 1%;
+	}
+	.content-primary.grid .ui-listview .data{
+		margin-right: 1%;
 	}
 }
